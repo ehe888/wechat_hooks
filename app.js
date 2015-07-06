@@ -36,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 开发者通过检验signature对请求进行校验（下面有校验方式）。
 若确认此次GET请求来自微信服务器，请原样返回echostr参数内容，则接入生效，成为开发者成功，否则接入失败。
 */
-app.get('/wx', function(req, res){
+app.route('/wx').get(function(req, res){
     var signature = req.query.signature,
         timestamp = req.query.timestamp,
         nonce     = req.query.nonce,
@@ -44,6 +44,9 @@ app.get('/wx', function(req, res){
 
     console.log("==> " + echostr);
     res.end(echostr);
+}).post(function(req, res){
+    console.dir(req.body);
+    res.end(req.body);
 });
 
 // catch 404 and forward to error handler
