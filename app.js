@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var users = require('./routes/users');
+var xmlparser = require('express-xml-bodyparser');
 
 var app = express();
 var router = express.Router();
@@ -19,6 +20,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(xmlparser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/', routes);
@@ -45,8 +47,8 @@ router.get('/', function(req, res){
     res.end(echostr);
 });
 
-router.post('/', function(req, res){
-    console.log("==>" + req.body);
+router.post('/',xmlparser({trim: false, explicitArray: false}), function(req, res){
+    console.dir(req.body);
     res.end("");
 });
 
