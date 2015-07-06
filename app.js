@@ -4,11 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+var router = express.Router();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -36,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 开发者通过检验signature对请求进行校验（下面有校验方式）。
 若确认此次GET请求来自微信服务器，请原样返回echostr参数内容，则接入生效，成为开发者成功，否则接入失败。
 */
-app.route('/wx').get(function(req, res){
+router.get('/', function(req, res){
     var signature = req.query.signature,
         timestamp = req.query.timestamp,
         nonce     = req.query.nonce,
@@ -44,13 +43,17 @@ app.route('/wx').get(function(req, res){
 
     console.log("==> " + echostr);
     res.end(echostr);
-}).post(function(req, res){
+});
+
+router.post('/', function(req, res){
     console.dir(req.body);
     res.end(req.body);
 });
 
+app.use('/wx', router);
+
 // catch 404 and forward to error handler
-routes.use(function(req, res, next) {
+app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
