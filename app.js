@@ -46,8 +46,8 @@ router.get('/', function(req, res){
 });
 
 router.post('/', function(req, res){
-    console.dir(req.body);
-    res.end(req.body);
+    console.log("==>" + req.body);
+    res.end("");
 });
 
 app.use('/wx', router);
