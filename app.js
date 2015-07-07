@@ -25,7 +25,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/', routes);
 
-
+app.use(function(req, res, next){
+    console.log("Here comes the request ==> ");
+    next();
+});
 /*
 开发者提交信息后，微信服务器将发送GET请求到填写的服务器地址URL上，GET请求携带四个参数：
 
