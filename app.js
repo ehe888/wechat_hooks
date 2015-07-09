@@ -55,6 +55,11 @@ router.post('/',xmlparser({trim: false, explicitArray: false}), function(req, re
     res.end("");
 });
 
+
+router.get('/jump', function(req, res){
+    return res.redirect("http://weixin.qq.com/r/ZDgfBzHE5WyarXVk9212");
+});
+
 app.use('/wx', router);
 
 // catch 404 and forward to error handler
